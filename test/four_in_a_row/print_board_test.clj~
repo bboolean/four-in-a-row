@@ -1,0 +1,89 @@
+(ns four-in-a-row.core-test
+  (:require [clojure.test :refer :all]
+            [four-in-a-row.core :as core]))
+
+(deftest a-test
+  (testing "a-test"
+    (is (=
+         '("x" "o")
+         (core/a 0 "x" 0 '("o"))))
+    (is (=
+         '("o")
+         (core/a 1 "x" 0 '("o"))))))
+
+(deftest add-checker-test
+  (testing "add-checker-test"
+    (is (=
+         '(()
+           ()
+           ("x" "o")
+           ()
+           ()
+           ()
+           ())
+         (core/add-checker
+          2
+          "x"
+          '(()
+            ()
+            ("o")
+            ()
+            ()
+            ()
+            ()))))))
+
+(deftest get-space
+  (testing get-space
+    (is (=
+         "o"
+         (core/get-space
+          '(()
+            ()
+            ("x" "o")
+            ()
+            ()
+            ()
+            ())
+          0
+          2)))))
+
+(deftest print-board-column-test
+  (testing "print-board-column-test"
+    (is (=
+         "_ _ x _ _ _ _"
+         (core/print-board-column
+          0
+          '(()
+            ()
+            ("x")
+            ()
+            ()
+            ()
+            ()))))))
+
+(deftest map-join-test
+  (testing "map-join-test"
+    (is (=
+         "2 3 4"
+         (core/map-join
+          " "
+          #(+ %1 1)
+          '(1 2 3))))))
+
+(deftest print-board-test
+  (testing "print-board-test"
+    (is (=
+         (str
+          "_ _ _ _ _ _ _\n"
+          "_ _ _ _ _ _ _\n"
+          "_ _ _ _ _ _ _\n"
+          "x _ _ o _ _ _\n"
+          "o _ _ x _ x _")
+         (core/print-board
+          '(("x" "o")
+            ()
+            ()
+            ("o" "x")
+            ()
+            ("x")
+            ()))))))

@@ -1,0 +1,46 @@
+(ns four-in-a-row.core
+  (:gen-class))
+
+(def board
+  '(()
+    ()
+    ()
+    ()
+    ()
+    ()
+    ()))
+
+(defn a [new-checker-index new-checker index list]
+  (if
+   (= index new-checker-index)
+    (cons new-checker list)
+    list))
+
+(defn add-checker [new-checker-index new-checker col]
+  (map-indexed (partial a new-checker-index new-checker) col))
+
+(defn get-space [board row column]
+  (as-> board $
+    (nth $ column "_")
+    (reverse $)
+    (nth $ row "_")))
+
+(defn print-board-column [row board]
+  (as-> (range 0 7) $
+    (map
+     (partial get-space board row)
+     $)
+    (clojure.string/join " " $)))
+
+(defn print-board [board]
+  (as-> (range 0 5) $
+    (map
+     (fn [row] (print-board-column-list row board))
+     $)
+    (reverse $)
+    (clojure.string/join "\n" $)))
+
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (println "Hello, World!"))

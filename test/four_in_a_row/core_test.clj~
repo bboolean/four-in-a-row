@@ -1,0 +1,37 @@
+(ns four-in-a-row.core-test
+  (:require [clojure.test :refer :all]
+            [four-in-a-row.core :as core]))
+
+(deftest a-test
+  (testing "a-test"
+    (is (=
+         '("x" "_")
+         (core/a 0 0 "x" '("_"))))
+    (is (=
+         '("_")
+         (core/a 0 1 "x" '("_"))))))
+
+(deftest add-checker-test
+  (testing "add-checker-test"
+    (is (=
+         '(()
+           ()
+           ("x" "_")
+           ()
+           ()
+           ()
+           ())
+         (core/add-checker
+          2
+          "x"
+          '(()
+            ()
+            ("_")
+            ()
+            ()
+            ()
+            ()))))))
+
+(deftest a-test
+  (testing "FIXME, I fail."
+    (is (= 0 1))))
