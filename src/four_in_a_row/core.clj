@@ -33,14 +33,22 @@
    "\n\n"
    turn "'s turn> "))
 
+(defn input-valid? [new-checker-index]
+  (and (<= new-checker-index 7)
+       (>= new-checker-index 0)))
+
 (defn game-loop [turn board]
   (do
     (print (print-board turn board))
     (flush)
-    (let [new-checker-index (- (bigdec (read-line)) 1)
+    (let [new-checker-index (- (Integer/parseInt (read-line)) 1)
           new-board (add-checker new-checker-index turn board)
           new-turn (if (= "x" turn) "o" "x")]
-      (game-loop new-turn new-board))))
+      (if (input-valid? new-checker-index)
+        (game-loop new-turn new-board)
+        (do
+          (println "\n### Input invalid; please try again ###")
+          (game-loop turn board))))))
 
 (defn -main
   "I don't do a whole lot ... yet."
