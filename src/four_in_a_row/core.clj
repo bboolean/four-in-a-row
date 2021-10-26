@@ -1,6 +1,8 @@
 (ns four-in-a-row.core
   (:gen-class)
-  (:require [four-in-a-row.print-board :as print-board]))
+  (:require
+   [four-in-a-row.print-board :as print-board]
+   [four-in-a-row.check-for-winner :as check-for-winner]))
 
 (def board
   '(()
@@ -11,16 +13,13 @@
     ()
     ()))
 
-(defn cons-checker [new-checker-index new-checker index list]
-  (if
-   (== index new-checker-index)
-    (cons new-checker list)
-    list))
+(defn add-checker-to-column [x turn index column]
+  (if (= index x) (cons turn column) column))
 
-(defn add-checker [new-checker-index new-checker board]
-  (map-indexed (partial cons-checker new-checker-index new-checker) board))
+(defn add-checker [x turn board]
+  (map-indexed (partial add-checker-to-column x turn) board))
 
-(defn print-board [turn board]
+(defn print-board [board]
   (str
    "\n"
    "\033[31m"
@@ -30,27 +29,41 @@
    "\033[34m"
    "1 2 3 4 5 6 7"
    "\033[0m"
-   "\n\n"
-   turn "'s turn> "))
+   "\n\n"))
 
-(defn input-valid? [new-checker-index]
-  (and (<= new-checker-index 7)
-       (>= new-checker-index 0)))
+(defn print-prompt [turn]
+  (str turn "'s turn> "))
+
+(defn input-invalid? [x y]
+  (or (> x 6)
+      (< x 0)
+      (> y 4)))
 
 (defn game-loop [turn board]
   (do
-    (print (print-board turn board))
+    (print (print-board board))
+    (print (print-prompt turn))
     (flush)
-    (let [new-checker-index (- (Integer/parseInt (read-line)) 1)
-          new-board (add-checker new-checker-index turn board)
+    (let [x (- (Integer/parseInt (read-line)) 1)
+          new-board (add-checker x turn board)
+          y (- (count (nth new-board x [])) 1)
           new-turn (if (= "x" turn) "o" "x")]
-      (if (input-valid? new-checker-index)
-        (game-loop new-turn new-board)
+      (cond
+        (input-invalid? x y)
         (do
           (println "\n### Input invalid; please try again ###")
-          (game-loop turn board))))))
+          (game-loop turn board))
+
+        (check-for-winner/winner? :x x :y y :turn turn :board new-board)
+        (do
+          (print (print-board new-board))
+          (println (str "🎉🎉 Player " turn " wins! 🎉🎉\n")))
+
+        :else
+        (game-loop new-turn new-board)))))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   (game-loop "x" board))
+
