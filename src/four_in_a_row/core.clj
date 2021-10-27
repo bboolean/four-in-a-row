@@ -63,7 +63,6 @@
         (game-loop new-turn new-board)))))
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
   (game-loop "x" board))
 

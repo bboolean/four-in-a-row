@@ -1,5 +1,5 @@
 (defproject four-in-a-row "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
+  :description "Play four in a row."
   :url "http://example.com/FIXME"
   :dependencies [[org.clojure/clojure "1.10.1"]]
   :main ^:skip-aot four-in-a-row.core
