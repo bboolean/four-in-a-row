@@ -3,7 +3,7 @@
             [four-in-a-row.print-board :as print-board]))
 
 (deftest print-board-space
-  (testing print-board-space
+  (testing "print-board-space"
     (is (=
          "o"
          (print-board/print-board-space
