@@ -1,6 +1,6 @@
 (ns four-in-a-row.print-board-test
   (:require [clojure.test :refer :all]
-            [four-in-a-row.print-board :as print-bard]))
+            [four-in-a-row.print-board :as print-board]))
 
 (deftest print-board-space
   (testing print-board-space

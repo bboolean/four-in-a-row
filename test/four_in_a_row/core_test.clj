@@ -2,17 +2,17 @@
   (:require [clojure.test :refer :all]
             [four-in-a-row.core :as core]))
 
-(deftest cons-checker-test
-  (testing "cons-checker-test"
+(deftest add-checker-to-column-test
+  (testing "add-checker-to-column"
     (is (=
          '("x" "o")
-         (core/cons-checker 0 "x" 0 '("o"))))
+         (core/add-checker-to-column 0 "x" 0 '("o"))))
     (is (=
          '("o")
-         (core/cons-checker 1 "x" 0 '("o"))))))
+         (core/add-checker-to-column 1 "x" 0 '("o"))))))
 
 (deftest add-checker-test
-  (testing "add-checker-test"
+  (testing "add-checker"
     (is (=
          '(()
            ()
